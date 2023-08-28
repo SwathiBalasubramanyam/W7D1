@@ -12,6 +12,18 @@
   </head>
 
   <body>
+    <h1>
+      <% if current_user %>
+        <%= "Hello #{current_user.username}" %>
+        <form action="<%= session_url %>" method = "post">
+          <input type="hidden" name="_method" value="DELETE">
+          <input type="submit" value="Log Out">
+        </form>
+      <% else %>
+        <a href="/session/new">Log In</a>
+        <a href="/users/new">Sign Up</a>
+      <% end %>
+    </h1>
     <nav class="main-nav">
       <h1><a href="<%= cats_url %>">99 Cats</a></h1>
     </nav>
