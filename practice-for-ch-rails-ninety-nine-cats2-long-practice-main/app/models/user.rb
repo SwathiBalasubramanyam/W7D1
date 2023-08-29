@@ -1,7 +1,18 @@
 class User < ApplicationRecord
+
+    validates :username, uniqueness: true, presence: true
+    validates :password, length: {minimum: 6}, allow_nil: true
+    validates :password_digest, presence: true
+
     before_validation :ensure_session_token
 
     attr_reader :password
+
+    has_many :cats,
+        foreign_key: :owner_id,
+        class_name: :Cat,
+        inverse_of: :owner,
+        dependent: :destroy
 
     def password=(password)
         self.password_digest = BCrypt::Password.create(password)
